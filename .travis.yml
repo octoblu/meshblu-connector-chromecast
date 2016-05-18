@@ -1,0 +1,56 @@
+language: cpp
+os:
+- linux
+- osx
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+    - g++-4.8-multilib
+    - gcc-multilib
+    - build-essential
+    - libbluetooth-dev
+    - libudev-dev
+    - libusb-1.0-0-dev
+env:
+  matrix:
+  - PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="amd64" MAIN_BUILD="true"
+  - PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
+matrix:
+  exclude:
+  - os: osx
+    env: PACKAGER_NODE_VERSION="5.5" PACKAGER_ARCH="386"
+branches:
+  only:
+  - "/^v[0-9]/"
+before_install:
+- PACKAGER_URL="https://meshblu-connector.octoblu.com/tools/packager/latest"
+- curl -fsS "${PACKAGER_URL}/travis_install_node.sh" -o /tmp/travis_install_node.sh
+- chmod +x /tmp/travis_install_node.sh
+- ". /tmp/travis_install_node.sh"
+- if [ "$TRAVIS_OS_NAME" == "linux" -a "$MAIN_BUILD" == "true" ]; then export NPM_PUBLISH="true"; fi
+install:
+- npm install --build-from-source
+script:
+- npm test
+before_deploy:
+- npm run package
+deploy:
+- provider: releases
+  api_key:
+    secure: "Vkj4gPvkeQ+OHyOJU7+kP4WFXndkaNmgZdhSXH+DDE0JDA334i41yBd/Zi4QSxKVIIhLKkE3SARXt0EI2JJO4iHMrcdaWOmyRN0RIvhwKpDIHV8jeTEDu21zEloe1EQZOW3XXjPt53MUwisJbyjCjGHcPQQiCX0mGnSQAWulXSle9Ti7FDclfu3yNV1dcGe2HjWxsHQnXuBXLNy1e2OTs0wBnQDRzPN4m1zV5TAzpos1pUSq+V5b73RhJBkfhtunY1Nd7tO+Hkj9wKHSqKxx6jyLcjj/ZQDsm3NtCWKRpZuKvxuNVlC6fhVnqodoqJfgSjcTiVW/OWn3pV3z5z+ZB4+n+Shsb0GGobhktN0UZKKlVhjGSezl3TV0GOyJxluZPhAJ+1mFjT4IfXyqm89dbUc4Jqmgv4xUvgI+6/nGFjxvzLxaQYR4b8Dg9jEAshRgMxYYbyBUBNuNPnjocMqdoNMBDOLpbX9XQNvuGVVrad3Fah+vUqjKJAhEXBtpezNSEJUsGJwjDOLebwe4kl/ps93EhOnvCywu+c3OsR3Xd1k9Jpv/tGV0A7sUGkG82xXFfNgbYjv2gueCrATKw8kN/Vf/LrAEVAMnUnH6AKFg7dOns1gKxo15YHCsbmLi87Ir69WB/HrjlpZsF/2zSbO1oAJPkHadEEEKXwzh2t/cQgQ="
+  file_glob: true
+  file:
+  - "deploy/*"
+  skip_cleanup: true
+  on:
+    tags: true
+- provider: npm
+  email: serveradmin@octoblu.com
+  api_key:
+    secure: "Q1Agud/TMoWEkaC9LTDL1vu0LLXGsfLktOYBJtCWt07bGgenNTJCNlgst78ky2rLO5AqB4CTTXoF5KdNlWK50wuljJVsXDv53N6YRIB/v37KpI2c06uNuvXwlQXbeLNaM7yP841iwPo/lH5IyG4TY2SUrncJ5zHG7a5aoaHZxBwIxWFh58Vk+5ODLnPCUAZJc+DkdjkmJNOemEy5Ui5/NirZQX/roc+ykyNtUlcczOBDP8s8TcsasXT2G/Jv3lo28qTTqSxjGwGVwKK5L0EAr3Ik8QgtXzjuMFuLWBHXMvHk++qnYQXFjiWONN0tmESCVlM4Sl4I3YSLY9Bsa7943jHlO9MKmPvFqEuZKuNU6a0BunuC89CXIi7p2ri6ix4HWuYhF1stirTH4Hmh2AmqJ82xBwSSlckd3h6I1nuSyZcubvTXceJhW7g4BIewDhi+B6avqdgQfYJJ21qWeyjcl+6n/vWJd7ksWdenOY9MhFAObfVK+ncqSfOJDnOdxkra+l1VByMP1bbbZD4Qudh5uRmcj2r7c3BThvvG38HicWdksjFbAbijNcxyYGVSrXdgR9TFwv7AKSPsMM+QUQC4tir/O6OzWADhiyc4trfO1WqHM2Xt0E9UYVZkqFLhag1ZEKlSOKN95CKGsVduhlx9kg2EJlmmY87D//6SXneoodo="
+  on:
+    tags: true
+    condition: "$NPM_PUBLISH = true"

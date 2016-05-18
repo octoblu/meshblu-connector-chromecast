@@ -1,21 +1,23 @@
 {
-  "name": "meshblu-chromecast",
+  "name": "meshblu-connector-chromecast",
   "repository": "octoblu/meshblu-chromecast",
   "version": "1.5.2",
   "main": "connector.js",
   "scripts": {
     "preinstall": "node -e \"try{require('./skip-install.js')}catch(e){}\"",
-    "start": "node command.js",
-    "test": "exit 0"
+    "start": "meshblu-connector-runner",
+    "test": "exit 0",
+    "package": "meshblu-connector-packager"
   },
   "dependencies": {
-    "castv2": "^0.1.4",
+    "castv2": "^0.1.6",
     "debug": "^2.2.0",
     "get-youtube-id": "^1.0.0",
     "lodash": "^3.10.1",
-    "mdns-js": "^0.4.0",
+    "mdns-js": "^0.5.0",
     "meshblu": "^1.30.1",
-    "meshblu-config": "^3.1.1"
+    "meshblu-config": "^4.0.0",
+    "meshblu-connector-runner": "^5.0.0"
   },
   "bundledDependencies": [
     "request",
@@ -34,5 +36,12 @@
   "keywords": [
     "meshblu-connector",
     "gateblu"
-  ]
+  ],
+  "devDependencies": {
+    "meshblu-connector-packager": "^12.0.0"
+  },
+  "meshbluConnector": {
+    "githubSlug": "octoblu/meshblu-connector-chromecast",
+    "schemasUrl": "https://raw.githubusercontent.com/octoblu/meshblu-connector-chromecast/v1.5.2/schemas.json"
+  }
 }
