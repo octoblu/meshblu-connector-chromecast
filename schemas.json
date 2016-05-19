@@ -1,68 +1,205 @@
 {
   "schemas": {
     "version": "1.0.0",
-    "form": {
-      "configure": {
-        "my-default": {
-          "angular": {
-            "$ref": "http://somewhere/over/the/rainbow"
-          }
-        }
-      },
-      "message": {
-        "example-01": {
-          "angular": {
-            "schema": ["*"]
-          }
-        }
-      }
-    },
     "configure": {
-      "my-default-config": {
-        "$ref": null,
+      "auto-discovery": {
+        "title": "Auto Discovery",
         "type": "object",
         "properties": {
           "options": {
-            "type" : "object",
-            "properties" : {
-              "example" : {
-                "type" : "string"
+            "type": "object",
+            "properties": {
+              "autoDiscover": {
+                "title": "Auto Discover Chromecast",
+                "type": "boolean"
+              }
+            },
+            "required": ["autoDiscover"]
+          }
+        },
+        "required": ["options"]
+      },
+      "by-name": {
+        "title": "Discover By Name",
+        "type": "object",
+        "properties": {
+          "options": {
+            "type": "object",
+            "properties": {
+              "chromecastName": {
+                "title": "Chromecast Name",
+                "type": "string"
+              }
+            },
+            "required": ["chromecastName"]
+          }
+        },
+        "required": ["options"]
+      }
+    },
+    "message": {
+      "youtube": {
+        "title": "Play Youtube",
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "jobType": {
+                "type": "string",
+                "default": "playYoutube"
+              }
+            }
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
               }
             }
           }
         },
-        "formSchema": {
-          "angular": "configure.my-default.angular"
-        }
+        "x-form-schema": {
+          "angular": "message.url.angular"
+        },
+        "required": ["data", "metadata"]
+      },
+      "display-text": {
+        "title": "Display Text",
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "jobType": {
+                "type": "string",
+                "default": "displayText"
+              }
+            }
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-form-schema": {
+          "angular": "message.text.angular"
+        },
+        "required": ["data", "metadata"]
+      },
+      "url": {
+        "title": "URL",
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "jobType": {
+                "type": "string",
+                "default": "displayURL"
+              }
+            }
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-form-schema": {
+          "angular": "message.url.angular"
+        },
+        "required": ["data", "metadata"]
+      },
+      "media": {
+        "title": "Media",
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "jobType": {
+                "type": "string",
+                "default": "displayMedia"
+              }
+            }
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "media": {
+                "type": "object",
+                "properties": {
+                  "mediaURL": {
+                    "title": "Media URL",
+                    "type": "string"
+                  },
+                  "streamType": {
+                    "title": "Stream Type",
+                    "type": "string",
+                    "default": "LIVE"
+                  },
+                  "contentType": {
+                    "title": "Content Type",
+                    "type": "string",
+                    "default": "video/mp4"
+                  },
+                  "required": ["mediaURL", "streamType", "contentType"]
+                }
+              },
+              "autoplay": {
+                "type": "boolean",
+                "default": true
+              },
+              "currentTime": {
+                "type": "number",
+                "default": 0
+              },
+              "required": ["media", "autoplay", "currentTime"]
+            }
+          }
+        },
+        "x-form-schema": {
+          "angular": "message.media.angular"
+        },
+        "required": ["data", "metadata"]
       }
     },
-    "message": {
-      "example-message-01": {
-        "type": "object",
-        "properties": {
-          "example-opt": {
-            "type": "string"
-          },
-          "another-example-opt":{
-            "type": "string"
+    "form": {
+      "message": {
+        "url": {
+          "angular": {
+            "schema": [
+              { "key": "data.url" }
+            ]
           }
         },
-        "formSchema": {
-          "angular": "message.example-01.angular"
-        },
-        "required": ["example-opt", "another-example-opt"]
-      },
-      "example-message-02": {
-        "type": "object",
-        "properties": {
-          "some-opt": {
-            "type": "string"
-          },
-          "another-some-opt":{
-            "type": "string"
+        "text": {
+          "angular": {
+            "schema": [
+              { "key": "data.text" }
+            ]
           }
         },
-        "required": ["some-opt", "another-some-opt"]
+        "media": {
+          "angular": {
+            "schema": [
+              { "key": "data.media.mediaURL" },
+              { "key": "data.media.streamType" },
+              { "key": "data.media.contentType" },
+              { "key": "data.autoplay" },
+              { "key": "data.currentTime" }
+            ]
+          }
+        }
       }
     }
   }
