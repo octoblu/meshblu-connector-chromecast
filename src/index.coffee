@@ -27,23 +27,12 @@ class ChromecastConnector extends EventEmitter
     @client = new Client
 
     @client.on 'error', (error) =>
-      console.error 'client error', error
+      console.error 'client error', error if error?
       @connected = false
 
     @client.connect chromecast.address, (error) =>
+      console.error 'client connect error', error if error?
       @connected = true
-      runner = new JobRunner {
-        @client,
-        jobType: 'displayMedia',
-        data: {
-          mediaURL: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/big_buck_bunny_1080p.mp4'
-          contentType: 'video/mp4',
-          streamType: 'BUFFERED'
-        }
-      }
-      runner.do (error) =>
-        return console.error 'job error', error if error?
-        debug 'ran job'
 
   isOnline: (callback) =>
     callback null, running: @connected

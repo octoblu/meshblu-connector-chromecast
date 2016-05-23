@@ -5,18 +5,18 @@ Media        = require './jobs/media'
 class JobRunner
   constructor: ({ @client, jobType, @data }) ->
     jobs =
-      playYoutube:
-        namespace: 'urn:x-cast:com.google.youtube.mdx'
-        appId: '233637DE'
-        method: =>
-      displayText:
-        namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
-        appId: '794B7BBF'
-        method: =>
-      displayURL:
-        namespace: 'urn:x-cast:uk.co.splintered.urlcaster'
-        appId: '7897BA3B'
-        method: =>
+      # playYoutube:
+      #   namespace: 'urn:x-cast:com.google.youtube.mdx'
+      #   appId: '233637DE'
+      #   method: =>
+      # displayText:
+      #   namespace: 'urn:x-cast:com.google.cast.sample.helloworld'
+      #   appId: '794B7BBF'
+      #   method: =>
+      # displayURL:
+      #   namespace: 'urn:x-cast:uk.co.splintered.urlcaster'
+      #   appId: '7897BA3B'
+      #   method: =>
       displayMedia:
         namespace: 'urn:x-cast:com.google.cast.media'
         appId: 'CC1AD845'

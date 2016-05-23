@@ -2,8 +2,8 @@
   "schemas": {
     "version": "1.0.0",
     "configure": {
-      "auto-discovery": {
-        "title": "Auto Discovery",
+      "default": {
+        "title": "Default Config",
         "type": "object",
         "properties": {
           "options": {
@@ -12,113 +12,19 @@
               "autoDiscover": {
                 "title": "Auto Discover Chromecast",
                 "type": "boolean"
-              }
-            },
-            "required": ["autoDiscover"]
-          }
-        },
-        "required": ["options"]
-      },
-      "by-name": {
-        "title": "Discover By Name",
-        "type": "object",
-        "properties": {
-          "options": {
-            "type": "object",
-            "properties": {
+              },
               "chromecastName": {
                 "title": "Chromecast Name",
                 "type": "string"
               }
             },
-            "required": ["chromecastName"]
+            "required": ["autoDiscover", "chromecastName"]
           }
         },
         "required": ["options"]
       }
     },
     "message": {
-      "youtube": {
-        "title": "Play Youtube",
-        "type": "object",
-        "properties": {
-          "metadata": {
-            "type": "object",
-            "properties": {
-              "jobType": {
-                "type": "string",
-                "default": "playYoutube"
-              }
-            }
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "url": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-form-schema": {
-          "angular": "message.url.angular"
-        },
-        "required": ["data", "metadata"]
-      },
-      "display-text": {
-        "title": "Display Text",
-        "type": "object",
-        "properties": {
-          "metadata": {
-            "type": "object",
-            "properties": {
-              "jobType": {
-                "type": "string",
-                "default": "displayText"
-              }
-            }
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "text": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-form-schema": {
-          "angular": "message.text.angular"
-        },
-        "required": ["data", "metadata"]
-      },
-      "url": {
-        "title": "URL",
-        "type": "object",
-        "properties": {
-          "metadata": {
-            "type": "object",
-            "properties": {
-              "jobType": {
-                "type": "string",
-                "default": "displayURL"
-              }
-            }
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "url": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-form-schema": {
-          "angular": "message.url.angular"
-        },
-        "required": ["data", "metadata"]
-      },
       "media": {
         "title": "Media",
         "type": "object",
@@ -138,13 +44,14 @@
               "media": {
                 "type": "object",
                 "properties": {
-                  "mediaURL": {
+                  "contentId": {
                     "title": "Media URL",
                     "type": "string"
                   },
                   "streamType": {
                     "title": "Stream Type",
                     "type": "string",
+                    "enum": ["LIVE", "BUFFERED"],
                     "default": "LIVE"
                   },
                   "contentType": {
@@ -152,18 +59,23 @@
                     "type": "string",
                     "default": "video/mp4"
                   },
-                  "required": ["mediaURL", "streamType", "contentType"]
+                  "required": ["contentId", "streamType", "contentType"]
                 }
               },
-              "autoplay": {
-                "type": "boolean",
-                "default": true
+              "options": {
+                "type": "object",
+                "properties": {
+                  "autoplay": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "currentTime": {
+                    "type": "number",
+                    "default": 0
+                  }
+                }
               },
-              "currentTime": {
-                "type": "number",
-                "default": 0
-              },
-              "required": ["media", "autoplay", "currentTime"]
+              "required": ["media", "options"]
             }
           }
         },
@@ -175,28 +87,14 @@
     },
     "form": {
       "message": {
-        "url": {
-          "angular": {
-            "schema": [
-              { "key": "data.url" }
-            ]
-          }
-        },
-        "text": {
-          "angular": {
-            "schema": [
-              { "key": "data.text" }
-            ]
-          }
-        },
         "media": {
           "angular": {
             "schema": [
-              { "key": "data.media.mediaURL" },
+              { "key": "data.media.contentId" },
               { "key": "data.media.streamType" },
               { "key": "data.media.contentType" },
-              { "key": "data.autoplay" },
-              { "key": "data.currentTime" }
+              { "key": "data.options.autoplay" },
+              { "key": "data.options.currentTime" }
             ]
           }
         }

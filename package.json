@@ -1,7 +1,7 @@
 {
   "name": "meshblu-connector-chromecast",
   "repository": "octoblu/meshblu-chromecast",
-  "version": "1.5.2",
+  "version": "2.0.0",
   "main": "connector.js",
   "scripts": {
     "preinstall": "node -e \"try{require('./skip-install.js')}catch(e){}\"",
@@ -42,6 +42,6 @@
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-chromecast",
-    "schemasUrl": "https://raw.githubusercontent.com/octoblu/meshblu-connector-chromecast/v1.5.2/schemas.json"
+    "schemasUrl": "https://raw.githubusercontent.com/octoblu/meshblu-connector-chromecast/v2.0.0/schemas.json"
   }
 }
