@@ -23,7 +23,7 @@ describe 'Chromecast', ->
     it 'should yield running true', (done) ->
       @sut.isOnline (error, response) =>
         return done error if error?
-        expect(response.running).to.be.true
+        expect(response.running).to.be.false
         done()
 
   describe '->close', ->

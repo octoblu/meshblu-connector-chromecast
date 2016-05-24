@@ -60,4 +60,8 @@ class ChromecastConnector extends EventEmitter
     debug 'started', @uuid
     @discoverer.discover @options
 
+  close: (callback) =>
+    @client?.close()
+    callback()
+
 module.exports = ChromecastConnector
