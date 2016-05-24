@@ -1,11 +1,9 @@
 {EventEmitter}  = require 'events'
 debug           = require('debug')('meshblu-connector-chromecast:index')
-{
-  Client,
-  DefaultMediaReceiver,
-} = require 'castv2-client'
+{ Client } = require 'castv2-client'
 Discoverer      = require './discoverer'
 JobRunner       = require './job-runner'
+async           = require 'async'
 
 class ChromecastConnector extends EventEmitter
   constructor: ->
@@ -37,19 +35,25 @@ class ChromecastConnector extends EventEmitter
   isOnline: (callback) =>
     callback null, running: @connected
 
-  onMessage: (message) =>
-    { topic, devices, fromUuid } = message
-    return if '*' in devices
-    return if fromUuid == @uuid
-    { metadata, data } = message
+  onMessage: (message={}) =>
+    return unless message.payload?
+    { metadata, data } = message.payload
     return unless metadata?
     { jobType } = metadata
     return unless jobType?
     debug 'running jobType', jobType
-    runner = new JobRunner { @client, jobType, data }
-    runner.do (error) =>
-      return console.error 'job error', error if error?
-      debug 'ran job', jobType
+    count = 0
+    test = => count > 20 || @connected
+    wait = (callback) =>
+      debug 'waiting for it to connect'
+      count++
+      _.delay callback, 500
+
+    async.until test, wait, =>
+      runner = new JobRunner { @client, jobType, data }
+      runner.do (error) =>
+        return console.error 'job error', error if error?
+        debug 'ran job', jobType
 
   onConfig: (device) =>
     { @options } = device

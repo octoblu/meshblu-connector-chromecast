@@ -1,7 +1,7 @@
 {
   "name": "meshblu-connector-chromecast",
   "repository": "octoblu/meshblu-chromecast",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "main": "connector.js",
   "scripts": {
     "preinstall": "node -e \"try{require('./skip-install.js')}catch(e){}\"",
@@ -10,6 +10,7 @@
     "package": "meshblu-connector-packager"
   },
   "dependencies": {
+    "async": "^1.5.2",
     "castv2-client": "^1.1.1",
     "debug": "^2.2.0",
     "get-youtube-id": "^1.0.0",

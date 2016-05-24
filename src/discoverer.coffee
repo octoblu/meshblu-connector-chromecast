@@ -7,7 +7,7 @@ debug           = require('debug')('meshblu-connector-chromecast:discoverer')
 class Discoverer extends EventEmitter
   discover: (options={}) =>
     { @autoDiscover, @chromecastName } = options
-    return debug 'missing required options' unless @autoDiscover? && @chromecastName?
+    return debug 'missing required options' unless @autoDiscover? || @chromecastName?
     return debug 'is same chromecast' if @_isSameChromecast()
     return debug 'already discovering' if @_discovering
 
