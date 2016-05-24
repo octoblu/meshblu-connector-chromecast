@@ -5,9 +5,11 @@ _               = require 'lodash'
 debug           = require('debug')('meshblu-connector-chromecast:discoverer')
 
 class Discoverer extends EventEmitter
-  discover: ({ @chromecastName, @autoDiscover }) =>
-    return if @_isSameChromecast()
-    return if @_discovering
+  discover: (options={}) =>
+    { @autoDiscover, @chromecastName } = options
+    return debug 'missing required options' unless @autoDiscover? && @chromecastName?
+    return debug 'is same chromecast' if @_isSameChromecast()
+    return debug 'already discovering' if @_discovering
 
     debug 'searching for chromecast...'
     @_discovering = true
