@@ -1,8 +1,9 @@
 {EventEmitter}  = require 'events'
 debug           = require('debug')('meshblu-connector-chromecast:index')
-{ Client } = require 'castv2-client'
+{ Client }      = require 'castv2-client'
 Discoverer      = require './discoverer'
 JobRunner       = require './job-runner'
+_               = require 'lodash'
 async           = require 'async'
 
 class ChromecastConnector extends EventEmitter
