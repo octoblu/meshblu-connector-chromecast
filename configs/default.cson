@@ -1,0 +1,15 @@
+title: "Default Config"
+type: "object"
+properties:
+  options:
+    type: "object"
+    properties:
+      autoDiscover:
+        title: "Auto Discover Chromecast"
+        type: "boolean"
+      chromecastName:
+        title: "Chromecast Name"
+        type: "string"
+required: [
+  "options"
+]

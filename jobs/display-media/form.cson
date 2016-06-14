@@ -1,0 +1,17 @@
+angular: [
+  {
+    key: "data.media.contentId"
+  }
+  {
+    key: "data.media.streamType"
+  }
+  {
+    key: "data.media.contentType"
+  }
+  {
+    key: "data.options.autoplay"
+  }
+  {
+    key: "data.options.currentTime"
+  }
+]
