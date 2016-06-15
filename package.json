@@ -7,7 +7,7 @@
     "start": "meshblu-connector-runner",
     "test": "mocha",
     "package": "meshblu-connector-packager",
-    "schema": "meshblu-connector-schema-generator"
+    "generate:schema": "meshblu-connector-schema-generator > ./schemas.json"
   },
   "dependencies": {
     "async": "^1.5.2",

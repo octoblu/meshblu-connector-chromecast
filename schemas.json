@@ -1,7 +1,3 @@
-
-> meshblu-connector-chromecast@3.0.5 schema /Users/octoblu/Projects/Octoblu/meshblu-connector-chromecast
-> meshblu-connector-schema-generator
-
 {
   "schemas": {
     "configure": {
@@ -125,7 +121,7 @@
         "required": [
           "metadata"
         ],
-        "title": "Media",
+        "title": "DisplayMedia",
         "type": "object",
         "x-form-schema": {
           "angular": "message.DisplayMedia.angular"
