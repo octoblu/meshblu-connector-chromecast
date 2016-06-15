@@ -7,16 +7,13 @@ async           = require 'async'
 
 class ChromecastConnector extends EventEmitter
   constructor: (dependencies={}) ->
-    {
-      Discoverer
-      Client
-    } = dependencies
+    Client = dependencies.Client if dependencies.Client?
     @discoverer = new Discoverer
     debug 'Chromecast constructed'
     @connected = false
 
   close: (callback) =>
-    @client.close()
+    @client?.close()
     process.nextTick callback
 
   isOnline: (callback) =>
@@ -27,6 +24,7 @@ class ChromecastConnector extends EventEmitter
     @discoverer.discover @options
 
   _onConnected: (callback) =>
+    count = 0
     test = => count > 20 || @connected
     wait = (cb) =>
       debug 'waiting for it to connect'
@@ -38,7 +36,6 @@ class ChromecastConnector extends EventEmitter
   _onDiscover: (chromecast) =>
     debug 'discovered'
     @connected = false
-    debug 'hello'
     @client = new Client
 
     @client.on 'error', (error) =>
@@ -52,11 +49,11 @@ class ChromecastConnector extends EventEmitter
   start: (device, callback) =>
     { @uuid, @options } = device
     debug 'started', @uuid
+    @discoverer.on 'discover', @_onDiscover
     @discoverer.on 'error', (error) =>
       console.error 'discoverer error', error
       @connected = false
       callback error
-    @discoverer.on 'discover', @_onDiscover
     @discoverer.discover @options
     @_onConnected callback
 

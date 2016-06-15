@@ -1,5 +1,6 @@
 http   = require 'http'
 _      = require 'lodash'
+{ DefaultMediaReceiver } = require 'castv2-client'
 
 class MediaJob
   constructor: ({@connector}) ->
