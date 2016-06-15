@@ -1,8 +1,20 @@
 {job} = require '../../jobs/display-media'
 
 describe 'DisplayMedia', ->
-  beforeEach ->
-    @sut = new job {@connector}
+  beforeEach (done) ->
+    @player =
+      load: sinon.stub()
+    @client =
+      launch: sinon.stub().yields null, @player
+    @connector =
+      client: @client
 
-  it 'should exist', ->
-    expect(@sut).to.exist
+    message =
+      data:
+        media: {}
+        options: {}
+    @sut = new job {@connector}
+    @sut.do message, done
+
+  it 'should call player.load', ->
+    expect(@player.load).to.have.been.calledWith {}, {}
