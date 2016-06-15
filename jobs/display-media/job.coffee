@@ -3,6 +3,7 @@ _      = require 'lodash'
 
 class MediaJob
   constructor: ({@connector}) ->
+    throw new Error 'MediaJob requires connector' unless @connector?
     {@client} = @connector
 
   do: ({data}, callback) =>
