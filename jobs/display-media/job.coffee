@@ -5,11 +5,11 @@ class MediaJob
   constructor: ({@connector}) ->
     {@client} = @connector
 
-  do: ({media, options}, callback) =>
+  do: ({data}, callback) =>
     return callback @_userError(422, 'data.media is required') unless data.media?
     return callback @_userError(422, 'data.options is required') unless data.options?
 
-    { media, options } = message
+    { media, options } = data
     @client.launch DefaultMediaReceiver, (error, player) =>
       return callback error if error?
       player.load media, options, (error, status) =>
