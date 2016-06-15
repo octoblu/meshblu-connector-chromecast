@@ -1,13 +1,13 @@
+
+> meshblu-connector-chromecast@3.0.5 schema /Users/octoblu/Projects/Octoblu/meshblu-connector-chromecast
+> meshblu-connector-schema-generator
+
 {
   "schemas": {
-    "version": "2.0.0",
     "configure": {
-      "default": {
-        "title": "Default Config",
-        "type": "object",
+      "Default": {
         "properties": {
           "options": {
-            "type": "object",
             "properties": {
               "autoDiscover": {
                 "title": "Auto Discover Chromecast",
@@ -17,85 +17,143 @@
                 "title": "Chromecast Name",
                 "type": "string"
               }
-            }
+            },
+            "type": "object"
           }
         },
-        "required": ["options"]
+        "required": [
+          "options"
+        ],
+        "title": "Default Config",
+        "type": "object"
+      }
+    },
+    "form": {
+      "message": {
+        "DisplayMedia": {
+          "angular": [
+            {
+              "key": "data.media.contentId"
+            },
+            {
+              "key": "data.media.streamType"
+            },
+            {
+              "key": "data.media.contentType"
+            },
+            {
+              "key": "data.options.autoplay"
+            },
+            {
+              "key": "data.options.currentTime"
+            }
+          ]
+        }
       }
     },
     "message": {
-      "media": {
-        "title": "Media",
-        "type": "object",
+      "DisplayMedia": {
         "properties": {
-          "metadata": {
-            "type": "object",
-            "properties": {
-              "jobType": {
-                "type": "string",
-                "default": "displayMedia"
-              }
-            }
-          },
           "data": {
-            "type": "object",
             "properties": {
               "media": {
-                "type": "object",
                 "properties": {
                   "contentId": {
                     "title": "Media URL",
                     "type": "string"
                   },
-                  "streamType": {
-                    "title": "Stream Type",
-                    "type": "string",
-                    "enum": ["LIVE", "BUFFERED"],
-                    "default": "LIVE"
-                  },
                   "contentType": {
+                    "default": "video/mp4",
                     "title": "Content Type",
-                    "type": "string",
-                    "default": "video/mp4"
+                    "type": "string"
                   },
-                  "required": ["contentId", "streamType", "contentType"]
-                }
+                  "required": [
+                    "contentId",
+                    "streamType",
+                    "contentType"
+                  ],
+                  "streamType": {
+                    "default": "LIVE",
+                    "enum": [
+                      "LIVE",
+                      "BUFFERED"
+                    ],
+                    "title": "Stream Type",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
               },
               "options": {
-                "type": "object",
                 "properties": {
                   "autoplay": {
-                    "type": "boolean",
-                    "default": true
+                    "default": true,
+                    "type": "boolean"
                   },
                   "currentTime": {
-                    "type": "number",
-                    "default": 0
+                    "default": 0,
+                    "type": "number"
                   }
-                }
+                },
+                "type": "object"
               },
-              "required": ["media", "options"]
-            }
+              "required": [
+                "media",
+                "options"
+              ]
+            },
+            "type": "object"
+          },
+          "metadata": {
+            "properties": {
+              "jobType": {
+                "default": "DisplayMedia",
+                "enum": [
+                  "DisplayMedia"
+                ],
+                "type": "string"
+              },
+              "respondTo": {
+              }
+            },
+            "required": [
+              "jobType"
+            ],
+            "type": "object"
           }
         },
+        "required": [
+          "metadata"
+        ],
+        "title": "Media",
+        "type": "object",
         "x-form-schema": {
-          "angular": "message.media.angular"
+          "angular": "message.DisplayMedia.angular"
         },
-        "required": ["data", "metadata"]
+        "x-response-schema": "DisplayMedia"
       }
     },
-    "form": {
-      "message": {
-        "media": {
-          "angular": [
-            { "key": "data.media.contentId" },
-            { "key": "data.media.streamType" },
-            { "key": "data.media.contentType" },
-            { "key": "data.options.autoplay" },
-            { "key": "data.options.currentTime" }
-          ]
+    "response": {
+      "DisplayMedia": {
+        "properties": {
+          "metadata": {
+            "properties": {
+              "code": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "code"
+            ],
+            "type": "object"
+          }
         }
       }
-    }
+    },
+    "version": "2.0.0"
   }
 }

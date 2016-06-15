@@ -6,7 +6,8 @@
   "scripts": {
     "start": "meshblu-connector-runner",
     "test": "mocha",
-    "package": "meshblu-connector-packager"
+    "package": "meshblu-connector-packager",
+    "schema": "meshblu-connector-schema-generator"
   },
   "dependencies": {
     "async": "^1.5.2",
