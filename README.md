@@ -3,6 +3,7 @@
 [![Dependency status](http://img.shields.io/david/octoblu/meshblu-connector-chromecast.svg?style=flat)](https://david-dm.org/octoblu/meshblu-connector-chromecast)
 [![devDependency Status](http://img.shields.io/david/dev/octoblu/meshblu-connector-chromecast.svg?style=flat)](https://david-dm.org/octoblu/meshblu-connector-chromecast#info=devDependencies)
 [![Build Status](http://img.shields.io/travis/octoblu/meshblu-connector-chromecast.svg?style=flat&branch=master)](https://travis-ci.org/octoblu/meshblu-connector-chromecast)
+[![Slack Status](http://community-slack.octoblu.com/badge.svg)](http://community-slack.octoblu.com)
 
 [![NPM](https://nodei.co/npm/meshblu-connector-chromecast.svg?style=flat)](https://npmjs.org/package/meshblu-connector-chromecast)
 
