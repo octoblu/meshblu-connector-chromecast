@@ -7,9 +7,13 @@ properties:
       autoDiscover:
         title: "Auto Discover Chromecast"
         type: "boolean"
+        default: false
       chromecastName:
         title: "Chromecast Name"
         type: "string"
+    required: [
+      "autoDiscover"
+    ]
 required: [
   "options"
 ]
