@@ -11,9 +11,6 @@ properties:
       chromecastName:
         title: "Chromecast Name"
         type: "string"
-    required: [
-      "autoDiscover"
-    ]
 required: [
   "options"
 ]
